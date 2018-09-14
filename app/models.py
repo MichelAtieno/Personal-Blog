@@ -36,3 +36,28 @@ class Subscribers(db.Model):
     def __repr__(self):
         return f'Subscribers {self.email}'
 
+class BlogPost(db.Model):
+    __tablename__='blogs'
+    id = db.Column(db.Integer,primary_key = True)
+    title = db.Column(db.String())
+    blog_post = db.Column(db.String)
+    blog_pic = db.Column(db.String)
+    photo_url = db.Column(db.String)
+
+    def save_blog(self):
+       db.session.add(self)
+       db.session.commit()
+
+    
+    @classmethod
+    def get_blog(cls,id):
+        blog = BlogPost.query.filter_by(id = id).all()
+        return blog
+    
+    @classmethod
+    def get_all_blogs(cls):
+        blogs = BlogPost.query.order_by('-id').all()
+        return blogs
+
+
+
