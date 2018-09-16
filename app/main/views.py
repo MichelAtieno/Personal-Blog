@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for,flash
+from flask import render_template, redirect, url_for,flash, abort
 from . import main
 from .forms import SubscriberForm, BlogPostForm
 from ..models import User, Subscribers, BlogPost
@@ -23,20 +23,25 @@ def index():
         mail_message("Welcome to my blog","email/welcome",subscriber.email,subscriber=subscriber)
         return redirect(url_for('main.index'))
 
-    return render_template('index.html', title=title, subscribers=subscribers)
+    all_blogs = BlogPost.get_all_blogs()
+    if all_blogs:
+        blogs= all_blogs
+        return render_template('index.html',title=title, all_blogs= blogs, subscribers=subscribers)
+    elif not all_blogs:
+        blog_status= 'There are no blogs'
+        return render_template('index.html', title=title, blog_status=blog_status,subscribers=subscribers)
 
 @main.route('/create_blogpost', methods = ['GET', 'POST'])
 @login_required
 def create_blogpost():
+    title="Create BlogPost"
+
     blog_form = BlogPostForm()
 
     if blog_form.validate_on_submit():
-        title= blog_form.title.data
-        blog = blog_form.blog_content.data
+        blog = BlogPost(title= blog_form.title.data, blog_post= blog_form.blog_content.data)
+        db.session.add(blog)
+        db.session.commit()
+        return redirect(url_for('main.create_blogpost'))
 
-        new_blog = BlogPost(title=title, blog_post=blog)
-        new_blog.save_blog()
-
-        return redirect(url_for('main.blog',id=new_blog.id))
-    
-    return render_template('create_blog.html', blog_form=blog_form)
+    return render_template('blog.html', BlogPost = blog_form, title=title)

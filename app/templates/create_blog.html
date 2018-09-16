@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-md-1"> </div>
+            <div class="col-md-10">
+                    <legend class="border-bottom mb-4" style="font-size:25px;">Create Blog</legend>
+                    <form action="" method="post">
+                            {{blog_form.hidden_tag()}}
+                            <p>{{blog_form.title.label}}</p>
+                            <p>{{blog_form.title}}</p>
+                            {% for error in blog_form.title.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+    
+                            <p>{{blog_form.photo_url.label}}</p>
+                            <p>{{blog_form.photo_url}}</p>
+                            {% for error in blog_form.photo_url.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+    
+                            <p>{{blog_form.blog_content.label}}</p>
+                            <p>{{blog_form.blog_content}}</p>
+                            {% for error in blog_form.blog_content.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+    
+                            <p>{{blog_form.submit()}}</p>
+                        </form>
+                    
+    
+            </div>
+            <div class="col-md-1"></div>
+            </div>
+    </div>
+    </body>
+

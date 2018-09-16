@@ -9,5 +9,6 @@ class SubscriberForm(FlaskForm):
 
 class BlogPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(),Length(min=1, max=1000)])
+    photo_url = StringField('Photo URL', validators=[Required()])
     blog_content= TextAreaField('Post your blog', validators=[DataRequired(), Length(min=1)])
     submit = SubmitField('Submit')
