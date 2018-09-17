@@ -51,6 +51,21 @@ def create_blogpost():
         db.session.commit()
         return redirect(url_for('main.create_blogpost'))
 
-    get_comments = Comment.get_all_comments(id)
 
-    return render_template('blog.html', BlogPost = blog_form, title=title, comment_form=comment_form, get_comments=get_comments)
+    return render_template('blog.html', BlogPost = blog_form, title=title, comment_form=comment_form)
+
+@main.route('/blogpost/<id>', methods=['POST','GET'])
+def blogpost(id):
+    
+    title= f'Posts' 
+    blog = BlogPost.query.filter_by(id=id).first()
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(name= comment_form.name.data,comment_content = comment_form.comment.data, blog_id=id)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('main.blogpost',id=blog.id))
+
+    return render_template('blogpost.html', title = title, blog=blog, comment_form=comment_form)
+
+            

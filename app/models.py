@@ -54,6 +54,7 @@ class BlogPost(db.Model):
     photo_url = db.Column(db.String)
 
     comment = db.relationship('Comment',backref='blog',lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def save_blog(self):
        db.session.add(self)
@@ -62,7 +63,7 @@ class BlogPost(db.Model):
     
     @classmethod
     def get_blog(cls,id):
-        blog = BlogPost.query.filter_by(id = id).all()
+        blog = BlogPost.query.filter_by(blog_id = id).all()
         return blog
     
     @classmethod
@@ -75,7 +76,9 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     comment_content = db.Column(db.String())
+
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     def save_comment(self):
         db.session.add(self)
