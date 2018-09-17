@@ -5,6 +5,7 @@ class Config:
     General configuration parent class
     '''
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    
 
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
@@ -32,7 +33,7 @@ class DevConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://michel:mish123@localhost/blog'
     DEBUG = True
 
 config_options = {
