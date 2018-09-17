@@ -83,4 +83,17 @@ def delete_comment(id,id_comment):
 
     return redirect(url_for('main.blogpost',id=id))
 
+@main.route('/index/<int:id>/delete_blog')
+@login_required
+def delete_blog(id):
+    blog = BlogPost.get_blog(id)
+
+    db.session.delete(blog)
+    db.session.commit()
+
+    flash('Blog has been deleted') 
+
+    return redirect(url_for('main.index', id=id))
+
+
 
