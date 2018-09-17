@@ -46,7 +46,7 @@ def create_blogpost():
 
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        new_comment = Comment(name= comment_form.name.data, comment_content= comment_form.comment.data)
+        new_comment = Comment(name= comment_form.name.data, comment_content= comment_form.comment_content.data)
         db.session.add(new_comment)
         db.session.commit()
         return redirect(url_for('main.create_blogpost'))
@@ -61,11 +61,14 @@ def blogpost(id):
     blog = BlogPost.query.filter_by(id=id).first()
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        new_comment = Comment(name= comment_form.name.data,comment_content = comment_form.comment.data, blog_id=id)
+        new_comment = Comment(name= comment_form.name.data,comment_content = comment_form.comment_content.data, blog_id=id)
         db.session.add(new_comment)
         db.session.commit()
         return redirect(url_for('main.blogpost',id=blog.id))
 
-    return render_template('blogpost.html', title = title, blog=blog, comment_form=comment_form)
+    all_comments = Comment.query.all()
+    blog_comments = Comment.query.filter_by(blog_id=id).all()
+
+    return render_template('blogpost.html', title = title, blog=blog, comment_form=comment_form,all_comments=all_comments,blog_comments=blog_comments)
 
             

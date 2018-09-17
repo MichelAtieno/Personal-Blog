@@ -3,8 +3,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1" id="article">
-            <h1>{{blog.title}}</h1>
+        <div class="col-xs-10 col-xs-offset-1">
+            <h1>TITLE: {{blog.title}}</h1>
             <hr>
             <br>
             <p>{{blog.blog_post}}</p>
@@ -21,9 +21,9 @@
             <br>
             <h3>COMMENTS</h3>
             <hr>
-            {% for comment in comments %}
-            <i><sub>{{comment.name}} says:</sub></i>
-            <br> {{comment.comment}}
+            {% for one_comment in blog_comments %}
+            <i><sub>{{one_comment.name}} says:</sub></i>
+            {{one_comment.comment_content}}
             <hr>
             {% endfor %}
         </div>
