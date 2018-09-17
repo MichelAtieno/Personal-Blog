@@ -3,31 +3,50 @@
 
 {% block content %}
 
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-6">
-                <legend class="border-bottom mb-4" style="font-size:25px;">Subscribe Today</legend>
-
-    
-                {{wtf.quick_form(subscribers)}}
-            </div>
-
-        <div class="col-md-4"></div>
-
-       
-        </div>
-        </div>
-
+  <head>
+      <style>
+          body {
+              background-color: whitesmoke;
+          }
+          .blogs {
+              background-color: ivory;
+              box-sizing: border-box;
+              border: 2px solid grey;
+              margin-left: 25px;
+              margin-top: 15px;
+          }
+          .heading {
+              font-size: 45px;
+              margin-left: 250px;
+              font-style:italic;
+              text-decoration: underline;
+          }
+      </style>
+  </head>
+  <body>
         <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12" >
-                        <h1>{{blog_status}}</h1>
-                        <h1>Blogs</h1>
-                    </div>
+                <div class="col-md-6">
+                        <legend class="border-bottom mb-4" style="font-size:25px;">Subscribe To Our Blogs</legend>
+                        {{wtf.quick_form(subscribers)}}
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4"></div>
+               
+                </div>
+                </div>
+
+
+        <div class="container">
+
+               <h1 class="heading">HERE ARE YOUR BLOGS</h1>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    
                     {% for blog in all_blogs %}
-                        <div class="col-md-3">
+                    <div class="col-md-8 blogs">
                             {% if blog.photo_url %}
+                           
                             <a href="{{url_for('main.blogpost',id=blog.id)}}">
                                 <img src="{{blog.photo_url}}" alt="Loading Image" class="img-responsive">
                             </a>
@@ -36,16 +55,18 @@
                                 <img src="{{url_for('static',filename='')}}" alt="blog-image" class="img-responsive">
                             </a>
                             {% endif %}
-                            <div class="blog-snippet-content">
                                 <h3><a href="{{url_for('main.blogpost',id=blog.id)}}">{{blog.title}}</a></h3>
                                 <hr>
-                                <p> {{blog.blog_post}}<a href="{{url_for('main.blogpost',id=blog.id)}}">View More</a></p>
+                                <p> {{blog.blog_post}}<br><a href="{{url_for('main.blogpost',id=blog.id)}}">View More</a></p>
                                
-                            </div>
-                        </div>  
+                            </div>   
                     {% endfor %}
+                
+                    <div class="col-md-2"></div>
+                </div> 
+                   
                 </div>
             </div>
-
+            </body>
 
 {% endblock %}
