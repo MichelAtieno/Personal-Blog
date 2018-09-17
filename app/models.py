@@ -33,6 +33,15 @@ class Subscribers(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255))
 
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_subscribers(cls):
+        subscribers=Subscribers.query.all()
+        return subscribers
+
     def __repr__(self):
         return f'Subscribers {self.email}'
 
@@ -43,6 +52,8 @@ class BlogPost(db.Model):
     blog_post = db.Column(db.String)
     blog_pic = db.Column(db.String)
     photo_url = db.Column(db.String)
+
+    comment = db.relationship('Comment',backref='blog',lazy='dynamic')
 
     def save_blog(self):
        db.session.add(self)
@@ -59,5 +70,28 @@ class BlogPost(db.Model):
         blogs = BlogPost.query.order_by('-id').all()
         return blogs
 
+class Comment(db.Model):
+    __tablename__='comments'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    email = db.Column(db.String())
+    comment_content = db.Column(db.String())
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_single_comment(cls,id_blog,id):
+        comment = Comment.query.filter_by(blog_id=id_blog,id=id).first()
+        return comment
+    
+    @classmethod
+    def get_all_comments(cls,id):
+        comments = Comment.query.filter_by(blog_id=id).order_by('-id').all()
+        return comments
+    
+    
 
 
