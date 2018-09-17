@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for,flash, abort
 from . import main
-from .forms import SubscriberForm, BlogPostForm
-from ..models import User, Subscribers, BlogPost
+from .forms import SubscriberForm, BlogPostForm, CommentForm
+from ..models import User, Subscribers, BlogPost, Comment
 from ..email import mail_message
 from .. import db
 from flask_login import login_required, current_user
@@ -44,4 +44,13 @@ def create_blogpost():
         db.session.commit()
         return redirect(url_for('main.create_blogpost'))
 
-    return render_template('blog.html', BlogPost = blog_form, title=title)
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(name= comment_form.name.data, comment_content= comment_form.comment.data)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('main.create_blogpost'))
+
+    get_comments = Comment.get_all_comments(id)
+
+    return render_template('blog.html', BlogPost = blog_form, title=title, comment_form=comment_form, get_comments=get_comments)

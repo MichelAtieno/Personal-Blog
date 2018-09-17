@@ -74,7 +74,6 @@ class Comment(db.Model):
     __tablename__='comments'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    email = db.Column(db.String())
     comment_content = db.Column(db.String())
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
     
