@@ -1,5 +1,5 @@
 # Project Personal Blog
-# By Michel Atieno, created on 16h September 2018.
+# By Michel Atieno, created on 16th September 2018.
 
 # Description
 
@@ -14,7 +14,7 @@
 <ul>
     <li>Clone the Repo</li>
     <li>Install [Postgres](https://www.postgresql.org/download/)</li>
-    <li>Create a Virtual Environment by tying the following command on the terminal: source virtual/bin/activate </li>
+    <li>Create a Virtual Environment by typing the following command on the terminal: source virtual/bin/activate </li>
     <li> Prepare environment variables</li>
     <li>Run Database Migrations</li>
     <li>Run the app in development</li>
