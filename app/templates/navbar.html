@@ -12,6 +12,7 @@
         <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{url_for('main.index')}}">HOME</a></li>
                 {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('main.create_blogpost')}}">Create Blog</a></li>
                 <li style="color:white;padding:15px;">{{current_user.username}}</li>
                 <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
                 {% else %}
@@ -19,7 +20,6 @@
                 <li class="divider"></li>
                 <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
                 <li class="divider"></li>
-                <li><a href="{{url_for('main.create_blogpost')}}">Create Blog</a></li>
                 {%endif%}
         </ul>
       </ul>
