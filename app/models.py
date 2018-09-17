@@ -63,7 +63,7 @@ class BlogPost(db.Model):
     
     @classmethod
     def get_blog(cls,id):
-        blog = BlogPost.query.filter_by(blog_id = id).all()
+        blog = BlogPost.query.filter_by(id = id).all()
         return blog
     
     @classmethod

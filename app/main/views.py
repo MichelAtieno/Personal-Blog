@@ -71,4 +71,16 @@ def blogpost(id):
 
     return render_template('blogpost.html', title = title, blog=blog, comment_form=comment_form,all_comments=all_comments,blog_comments=blog_comments)
 
-            
+@main.route('/blog/<int:id>/<int:id_comment>/delete_comment')
+@login_required
+def delete_comment(id,id_comment):
+    comment = Comment.get_single_comment(id,id_comment)
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash('Comment has been deleted')
+
+    return redirect(url_for('main.blogpost',id=id))
+
+

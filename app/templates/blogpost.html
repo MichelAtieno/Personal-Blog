@@ -24,8 +24,12 @@
             {% for one_comment in blog_comments %}
             <i><sub>{{one_comment.name}} says:</sub></i>
             {{one_comment.comment_content}}
+            {% if current_user.is_authenticated%}
+            <p><a href="{{url_for('main.delete_comment',id=one_comment.blog_id,id_comment=one_comment.id)}}">delete</a></p>
+            {% endif %}
             <hr>
             {% endfor %}
+            
         </div>
     </div>
 </div>
